@@ -1,0 +1,101 @@
+/* Temperature Chart Styles */
+.temperature-chart {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.temperature-chart h3 {
+  margin: 0 0 20px 0;
+  color: var(--text-primary);
+  text-align: center;
+  font-size: 1.3em;
+  flex-shrink: 0;
+}
+
+.no-chart-data {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+}
+
+.no-chart-data p {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.chart-loading,
+.chart-error {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+}
+
+.chart-loading p,
+.chart-error p {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.chart-error {
+  color: #c85450;
+}
+
+.chart-container {
+  flex: 1;
+  overflow: hidden;
+  width: 100%;
+}
+
+.chart-scroll-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .temperature-chart {
+    padding: 0 5%;
+  }
+  
+  .temperature-chart h3 {
+    font-size: 1.2em;
+    margin-bottom: 16px;
+  }
+  
+  .chart-container {
+    height: calc(100vh - 200px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+  
+  .chart-scroll-wrapper {
+    min-width: 800px; /* Minimum width to prevent compression */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Remove chart click borders and focus outlines */
+.temperature-chart * {
+  outline: none !important;
+}
+
+.temperature-chart svg {
+  outline: none !important;
+}
+
+.temperature-chart .recharts-wrapper {
+  outline: none !important;
+}
+
+.temperature-chart .recharts-surface {
+  outline: none !important;
+} 

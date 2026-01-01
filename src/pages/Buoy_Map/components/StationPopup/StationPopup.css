@@ -1,0 +1,163 @@
+/* Popup container styles */
+.maps-custom-popup .maplibregl-popup-content {
+  background-color: var(--map-bg-secondary);
+  opacity: 1 !important;
+  border: 1px solid var(--map-border-light);
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px var(--map-shadow-medium);
+  padding: 0;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.maps-custom-popup .maplibregl-popup-content {
+  padding: 15px;
+}
+
+.maps-custom-popup .maplibregl-popup-close-button {
+  color: #000;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 2px 2px;
+  right: 0px;
+  top: 0px;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 16px;
+}
+
+.maps-custom-popup .maplibregl-popup-tip {
+  background-color: var(--map-bg-secondary);
+  border: 1px solid var(--map-border-light);
+  border-top: none;
+  border-left: none;
+}
+
+/* Popup content layout */
+.maps-popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Station header section */
+.maps-station-details {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid var(--map-border-primary);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.maps-station-details strong {
+  font-size: 16px;
+  width: 160px;
+  display: block;
+  color: var(--map-text-primary);
+  font-weight: 600;
+  text-align: center;
+}
+
+.maps-data-status {
+  font-size: 13px;
+  margin-top: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: block;
+  font-weight: 500;
+  text-align: center;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.maps-data-status.no-data {
+  background-color: var(--map-bg-error);
+  color: var(--map-text-error);
+}
+
+.maps-favorite-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--map-button-favorite);
+  transition: color 0.3s;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.maps-favorite-button:hover {
+  color: var(--map-button-hover);
+}
+
+.maps-favorite-button.active {
+  color: var(--map-button-primary);
+}
+
+/* Buoy readings section */
+.maps-buoy-readings {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.maps-datetime {
+  font-size: 12px;
+  color: var(--map-text-secondary);
+  font-style: italic;
+  margin-bottom: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.maps-datetime.old-data {
+  color: #f0ad4e;
+}
+
+.maps-reading-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--map-border-light);
+}
+
+.maps-reading-item:last-child {
+  border-bottom: none;
+}
+
+.maps-reading-label {
+  color: var(--map-text-primary);
+  font-weight: 600;
+}
+
+.maps-reading-value {
+  font-weight: 500;
+  color: var(--map-text-primary);
+}
+
+.maps-no-data-message {
+  font-style: italic;
+  color: var(--map-text-primary);
+  text-align: center;
+  padding: 15px 0;
+  background-color: var(--map-bg-no-data);
+  border-radius: 4px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+  .maps-reading-item {
+    font-size: 13px;
+  }
+}

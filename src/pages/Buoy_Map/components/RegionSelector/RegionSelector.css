@@ -1,0 +1,35 @@
+.maps-region-selector-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1100;
+  background: var(--map-selector-legend-background);
+  border: 1px solid var(--map-border-primary);
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 4px var(--map-shadow-medium);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.maps-region-label {
+  font-size: 13px;
+  color: var(--map-text-primary);
+  font-weight: 500;
+}
+
+.maps-region-select {
+  padding: 6px 10px;
+  border: 1.5px solid var(--map-text-primary);
+  background-color: var(--map-selector-legend-background);
+  border-radius: 5px;
+  font-size: 13px;
+  color: var(--map-text-primary);
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.maps-region-select:focus {
+  border-color: var(--map-button-hover);
+}
