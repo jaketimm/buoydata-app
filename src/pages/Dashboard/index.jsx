@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ViewControls, FilterControls, NoFavoritesMessage, NoFavoritesInBodyOfWater } from './components/DashboardControls/DashboardControls.jsx';
-import displayHelpers from '../../shared/utils/helpers.js';
+import displayHelpers from '../../shared/utils/displayHelpers.js';
 import FullScreenLoading from '../../shared/components/FullScreenLoading.js';
 import Modal from './components/Modal/Modal.jsx';
 import TemperatureChart from './components/TemperatureChart/TemperatureChart.jsx';

@@ -1,6 +1,7 @@
-// utils/helpers.js
+// shared/utils/displayHelpers.js
 
-// Helper function to check if data is too old
+// Helper function to check if data is is more than 4 hours old
+// Used to turn timestamps yellow on UI
 const isDataTooOld = (stationData) => {
     if (!stationData.timestamp) return false;
     const dataDate = new Date(stationData.timestamp);

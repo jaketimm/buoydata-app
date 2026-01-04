@@ -14,7 +14,7 @@ def test():
 
 
 @app.route('/api/real-time-noaa-data', methods=['GET'])
-def fetch_noaa_data():
+def fetch_realtime_noaa_data():
     """Fetch NOAA buoy data for a specific hour"""
     hour = request.args.get('hour')
     
@@ -39,7 +39,6 @@ def fetch_noaa_data():
     except requests.exceptions.RequestException as e:
         print(f'NOAA fetch error: {str(e)}')
         return jsonify({'error': 'Failed to fetch NOAA data'}), 500
-
 
 
 

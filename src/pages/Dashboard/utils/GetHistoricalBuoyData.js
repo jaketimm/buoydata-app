@@ -266,14 +266,3 @@ const setCachedHistoricalData = (stationId, data) => {
     console.warn('Error writing to historical cache:', error);
   }
 };
-
-/**
- * Clears the historical data cache
- */
-export const clearHistoricalCache = () => {
-  try {
-    localStorage.removeItem(HISTORICAL_CACHE_KEY);
-  } catch (error) {
-    console.warn('Error clearing historical cache:', error);
-  }
-};
