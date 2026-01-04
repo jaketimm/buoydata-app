@@ -1,5 +1,4 @@
 // utils/helpers.js
-import helpers from '../../../shared/helpers/unitConverter.js';
 
 // Helper function to check if data is too old
 const isDataTooOld = (stationData) => {
@@ -15,23 +14,23 @@ const isDataTooOld = (stationData) => {
 const formatData = (stationData) => {
   return [
     (() => {
-      const value = helpers.celsiusToFahrenheit(stationData.ATMP);
+      const value = stationData.ATMP;
       return { label: 'Air Temp', value, unit: value === 'Not Reported' ? '' : '°F' };
     })(),
     (() => {
-      const value = helpers.celsiusToFahrenheit(stationData.WTMP);
+      const value = stationData.WTMP;
       return { label: 'Water Temp', value, unit: value === 'Not Reported' ? '' : '°F' };
     })(),
     (() => {
-      const value = helpers.mpsToMph(stationData.WSPD);
+      const value = stationData.WSPD;
       return { label: 'Wind Speed', value, unit: value === 'Not Reported' ? '' : ' mph' };
     })(),
     (() => {
-      const value = helpers.mapDegreesToDirection(stationData.WDIR);
+      const value = stationData.WDIR;
       return { label: 'Wind Direction', value, unit: '' };
     })(),
     (() => {
-      const value = helpers.metersToFeet(stationData.WVHT);
+      const value = stationData.WVHT;
       return { label: 'Wave Height', value, unit: value === 'Not Reported' ? '' : ' ft' };
     })(),
   ];

@@ -74,7 +74,7 @@ const getCachedBuoyData = async () => {
   let freshData = [];
   try {
     // Always try to fetch fresh data after rate limit window
-    freshData = await fetchBuoyDataNetlify();
+    freshData = await fetchCurrentBuoyData();
   } catch (error) {
     console.error('Error fetching fresh data:', error);
     // If fetch fails and we have cached data, return it
@@ -144,79 +144,33 @@ const getCachedBuoyData = async () => {
 };
 
 
-/**
- * Fetches NOAA data from Netlify function
- * @returns {Promise<Array>} Array of NOAA data objects
- */
-export const fetchBuoyDataNetlify = async () => {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 4000);
-
+// Fetch current data from Flask App
+export const fetchCurrentBuoyData = async () => {
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  
   try {
     const now = new Date();
-    // NOAA publishes data in UTC with ~25 minute delay after the hour
-    // Get data from 1-2 hours ago to ensure it's been published
-    const dataHour = new Date(now.getTime() - 90 * 60 * 1000); // 1.5 hours ago
-    const currentHour = String(dataHour.getUTCHours()).padStart(2, '0'); // Use UTC time
+    const dataHour = new Date(now.getTime() - 90 * 60 * 1000);
+    const currentHour = String(dataHour.getUTCHours()).padStart(2, '0');
 
-    console.log(`Fetching NOAA data for UTC hour: ${currentHour}`);
-
-    const cacheBuster = Date.now();
     const response = await fetch(
-      `/.netlify/functions/fetchNoaaData?hour=${currentHour}&t=${cacheBuster}`,
-      {
-        signal: controller.signal,
-        cache: 'no-store'
-      }
+      `${API_URL}/api/real-time-noaa-data?hour=${currentHour}`,
+      { cache: 'no-store' }
     );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.text();
-    clearTimeout(timeoutId);
-    return parseTextData(data);
+    return await response.json(); 
   } catch (error) {
-    clearTimeout(timeoutId);
-    if (error.name === 'AbortError') {
-      throw new Error('Request timed out');
-    }
     throw error;
   }
 };
 
 
-const parseTextData = (text) => {
-  const lines = text.trim().split('\n');
-  const headers = lines[0].trim().split(/\s+/);
 
-  return lines.slice(1).map(line => {
-    const values = line.trim().split(/\s+/);
-    const entry = {};
 
-    headers.forEach((header, i) => {
-      entry[header] = values[i];
-    });
-    
-    // Add formatted timestamp fields for easier handling
-    if (entry.YY && entry.MM && entry.DD && entry.hh && entry.mm) {
-      // Handle both 2-digit and 4-digit years
-      const year = entry.YY.length === 2 ? `20${entry.YY}` : entry.YY;
-      
-      // Create ISO timestamp for comparison
-      const isoDate = `${year}-${entry.MM.padStart(2, '0')}-${entry.DD.padStart(2, '0')}T${entry.hh.padStart(2, '0')}:${entry.mm.padStart(2, '0')}:00Z`;
-      
-      entry.timestamp = new Date(isoDate);
-      entry.isoTimestamp = isoDate;
-      
-      // Create display-friendly timestamp 
-      entry.displayTimestamp = `${entry.MM}/${entry.DD}/${year} ${entry.hh}:${entry.mm} UTC`;
-    }
-
-    return entry;
-  });
-};
 
 /**
  * Fetches NOAA data and filters for specific stations with top-of-hour readings only

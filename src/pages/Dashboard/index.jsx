@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ViewControls, FilterControls, NoFavoritesMessage, NoFavoritesInBodyOfWater } from './components/DashboardControls/DashboardControls.jsx';
-import dashboardHelpers from './utils/helpers.js';
+import displayHelpers from '../../shared/utils/helpers.js';
 import FullScreenLoading from '../../shared/components/FullScreenLoading.js';
 import Modal from './components/Modal/Modal.jsx';
 import TemperatureChart from './components/TemperatureChart/TemperatureChart.jsx';
@@ -156,10 +156,10 @@ const BuoyCard = ({
     }
 
     // Check if data is stale (more than 4 hours old)
-    const isDataOld = dashboardHelpers.isDataTooOld(stationData);
+    const isDataOld = displayHelpers.isDataTooOld(stationData);
 
     // Format all data fields for display
-    const dataFields = dashboardHelpers.formatData(stationData);
+    const dataFields = displayHelpers.formatData(stationData);
 
     return (
       <div className="buoy-data">

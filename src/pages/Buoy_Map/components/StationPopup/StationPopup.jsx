@@ -1,7 +1,7 @@
 import React from 'react';
 import { Popup } from 'react-map-gl/maplibre';
 import './StationPopup.css';
-import buoyMapHelpers from '../../utils/helpers.js';
+import displayHelpers from '../../../../shared/utils/helpers.js';
 
 // Popup component that displays detailed station information when a buoy marker is clicked
 const StationPopup = ({ 
@@ -32,8 +32,8 @@ const StationPopup = ({
     }
     
     // Check if data is stale and format all readings for display
-    const isDataOld = buoyMapHelpers.isDataTooOld(stationData);
-    const dataFields = buoyMapHelpers.formatData(stationData);
+    const isDataOld = displayHelpers.isDataTooOld(stationData);
+    const dataFields = displayHelpers.formatData(stationData);
     
     return (
       <div className="maps-buoy-readings">

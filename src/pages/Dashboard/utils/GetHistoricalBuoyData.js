@@ -1,5 +1,4 @@
 // utils/GetHistoricalBuoyData.js
-import helpers from '../../../shared/helpers/unitConverter.js';
 
 // Historical data cache
 const HISTORICAL_CACHE_KEY = 'historical_data_cache';
@@ -168,8 +167,8 @@ const processDailyHighs = (dataToUse) => {
 
       const mappedEntry = {
         timestamp: entry.isoTimestamp,
-        airTemp: hasValidAirTemp ? helpers.celsiusToFahrenheit(airTempC) : null,
-        waterTemp: hasValidWaterTemp ? helpers.celsiusToFahrenheit(waterTempC) : null,
+        airTemp: hasValidAirTemp ? airTempC : null,
+        waterTemp: hasValidWaterTemp ? waterTempC : null,
         date: entry.isoTimestamp ? new Date(entry.isoTimestamp) : null,
         dayKey: dayKey
       };

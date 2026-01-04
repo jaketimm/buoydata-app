@@ -31,6 +31,32 @@ buoy_condtions_react/
 └── README.md               # Project documentation
 ```
 
+
+### Installation
+
+1. Clone the repository
+
+2. Set up Python backend:
+
+```bash
+cd server
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# Mac/Linux:
+source venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+3. Install client dependencies:
+
+```bash
+npm install
+```
+
+
+
 ### Architecture Overview
 
 #### **Shared Resources** (`src/`)

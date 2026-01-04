@@ -35,44 +35,12 @@ const useHistoricalData = () => {
     }
   };
 
-  /**
-   * Clears historical data for a specific station
-   * @param {string} stationId - The station ID to clear data for
-   */
-  const clearHistoricalData = (stationId) => {
-    setHistoricalData(prev => {
-      const newData = { ...prev };
-      delete newData[stationId];
-      return newData;
-    });
-    setHistoricalLoading(prev => {
-      const newLoading = { ...prev };
-      delete newLoading[stationId];
-      return newLoading;
-    });
-    setHistoricalError(prev => {
-      const newError = { ...prev };
-      delete newError[stationId];
-      return newError;
-    });
-  };
-
-  /**
-   * Clears all historical data
-   */
-  const clearAllHistoricalData = () => {
-    setHistoricalData({});
-    setHistoricalLoading({});
-    setHistoricalError({});
-  };
 
   return {
     historicalData,
     historicalLoading,
     historicalError,
     fetchHistoricalDataForStation,
-    clearHistoricalData,
-    clearAllHistoricalData
   };
 };
 
