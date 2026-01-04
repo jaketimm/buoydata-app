@@ -1,4 +1,4 @@
-// utils/ProcessBuoyData.js
+// shared/utils/getCurrentBuoyData.js
 import { StationList } from '../../constants/stationList.js';
 import { fetchCurrentBuoyData } from './api.js';
 
@@ -32,6 +32,7 @@ export const getProcessedStationData = async () => {
 const getMergedBuoyData = async () => {
   let cachedData = null;
 
+  // retrieve cached data
   try {
     const cachedString = localStorage.getItem(CACHE_KEY);
 
@@ -60,6 +61,7 @@ const getMergedBuoyData = async () => {
 
   const mergedData = mergeFreshAndCached(freshData, cachedData);
 
+  // store merged data to cache
   try {
     localStorage.setItem(
       CACHE_KEY,
@@ -83,6 +85,8 @@ const mergeFreshAndCached = (freshData, cachedData = []) => {
   const staleStations = [];
 
   for (const [stationId, cachedEntries] of cachedByStation.entries()) {
+    // Check if cached station ID is present in the fresh readings
+    // If the ID is missing, use its cached readings if they are less than 12 hours old
     if (!freshByStation.has(stationId)) {
       const recentEntries = cachedEntries.filter(
         entry => !isDataTooOld(entry)
