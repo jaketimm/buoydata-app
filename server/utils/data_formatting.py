@@ -1,15 +1,17 @@
 from datetime import datetime 
 
 
-def parse_text_data(text):
-    """Parse NOAA text data into structured format"""
+# ==================== Real-Time Data Processing ====================
+
+def parse_real_time_data(text):
+    """Parse NOAA real-time text data into structured format with unit conversions"""
     lines = text.strip().split('\n')
     
     if len(lines) < 2:
         return []
     
     headers = lines[0].split()
-    data_lines = lines[1:]  # Skip header line
+    data_lines = lines[1:]
     
     parsed_entries = []
     
@@ -17,30 +19,26 @@ def parse_text_data(text):
         values = line.split()
         
         if len(values) != len(headers):
-            continue  # Skip malformed lines
+            continue
         
         entry = dict(zip(headers, values))
         
         # Add formatted timestamp fields
         if all(key in entry for key in ['YY', 'MM', 'DD', 'hh', 'mm']):
             try:
-                # Handle both 2-digit and 4-digit years
                 year = f"20{entry['YY']}" if len(entry['YY']) == 2 else entry['YY']
                 
-                # Create ISO timestamp
                 iso_date = f"{year}-{entry['MM'].zfill(2)}-{entry['DD'].zfill(2)}T{entry['hh'].zfill(2)}:{entry['mm'].zfill(2)}:00Z"
                 
-                # Parse to datetime object
                 timestamp = datetime.strptime(iso_date, '%Y-%m-%dT%H:%M:%SZ')
                 
                 entry['timestamp'] = timestamp.isoformat()
                 entry['isoTimestamp'] = iso_date
                 entry['displayTimestamp'] = f"{entry['MM']}/{entry['DD']}/{year} {entry['hh']}:{entry['mm']} UTC"
             except (ValueError, KeyError):
-                pass  # Skip timestamp formatting if parsing fails
-            
+                pass
         
-        # Apply Unit Converions
+        # Apply Unit Conversions
         if 'ATMP' in entry:
             entry['ATMP'] = celsius_to_fahrenheit(entry['ATMP'])
         
@@ -64,7 +62,164 @@ def parse_text_data(text):
     return parsed_entries
 
 
-# Unit Conversions
+# ==================== Historical Data Processing ====================
+
+def parse_historical_data(text):
+    """
+    Orchestrator function for historical data processing.
+    Parses raw NOAA data and returns daily high temperatures for charting.
+    """
+    entries = parse_raw_entries(text)
+    valid_entries = filter_valid_temperature_entries(entries)
+    daily_highs = calculate_daily_highs(valid_entries)
+    chart_data = format_chart_data(daily_highs)
+    return chart_data
+
+
+def parse_raw_entries(text):
+    """
+    Parse raw NOAA text data into structured entries.
+    No unit conversions - just structure parsing with timestamps.
+    """
+    lines = text.strip().split('\n')
+    
+    if len(lines) < 2:
+        return []
+    
+    # Parse headers, removing '#' prefix if present
+    headers = [h.replace('#', '') for h in lines[0].split()]
+    data_lines = lines[1:]
+    
+    parsed_entries = []
+    
+    for line in data_lines:
+        values = line.split()
+        
+        if len(values) != len(headers):
+            continue
+        
+        entry = dict(zip(headers, values))
+        
+        # Add timestamp and dayKey fields
+        if all(key in entry for key in ['YY', 'MM', 'DD', 'hh', 'mm']):
+            try:
+                year = f"20{entry['YY']}" if len(entry['YY']) == 2 else entry['YY']
+                
+                iso_date = f"{year}-{entry['MM'].zfill(2)}-{entry['DD'].zfill(2)}T{entry['hh'].zfill(2)}:{entry['mm'].zfill(2)}:00Z"
+                entry['isoTimestamp'] = iso_date
+                
+                entry['dayKey'] = f"{year}-{entry['MM'].zfill(2)}-{entry['DD'].zfill(2)}"
+            except (ValueError, KeyError):
+                pass
+        
+        parsed_entries.append(entry)
+    
+    return parsed_entries
+
+
+def filter_valid_temperature_entries(entries):
+    """
+    Filter entries to only include those with at least one valid temperature reading.
+    Valid means: exists, not 'MM', and is a valid number.
+    """
+    def is_valid_temp(value):
+        if value is None or value == 'MM':
+            return False
+        try:
+            float(value)
+            return True
+        except (ValueError, TypeError):
+            return False
+    
+    return [
+        entry for entry in entries
+        if is_valid_temp(entry.get('ATMP')) or is_valid_temp(entry.get('WTMP'))
+    ]
+
+
+def calculate_daily_highs(entries):
+    """
+    Group entries by day and find the highest temperature for each day.
+    Temperatures remain in Celsius during this step.
+    Returns a dict keyed by dayKey.
+    """
+    def parse_temp(value):
+        """Parse temperature value, return None if invalid"""
+        if value is None or value == 'MM':
+            return None
+        try:
+            return float(value)
+        except (ValueError, TypeError):
+            return None
+    
+    daily_highs = {}
+    
+    for entry in entries:
+        day_key = entry.get('dayKey')
+        if not day_key:
+            continue
+        
+        air_temp = parse_temp(entry.get('ATMP'))
+        water_temp = parse_temp(entry.get('WTMP'))
+        
+        if day_key not in daily_highs:
+            daily_highs[day_key] = {
+                'dayKey': day_key,
+                'timestamp': entry.get('isoTimestamp'),
+                'airTemp': air_temp,
+                'waterTemp': water_temp
+            }
+        else:
+            current = daily_highs[day_key]
+            
+            if air_temp is not None:
+                if current['airTemp'] is None or air_temp > current['airTemp']:
+                    current['airTemp'] = air_temp
+            
+            if water_temp is not None:
+                if current['waterTemp'] is None or water_temp > current['waterTemp']:
+                    current['waterTemp'] = water_temp
+    
+    return daily_highs
+
+
+def format_chart_data(daily_highs):
+    """
+    Convert daily highs dict to sorted list for charting.
+    Converts temperatures from Celsius to Fahrenheit.
+    """
+    chart_data = []
+    
+    for day_key in sorted(daily_highs.keys()):
+        entry = daily_highs[day_key]
+        
+        chart_entry = {
+            'dayKey': entry['dayKey'],
+            'timestamp': entry['timestamp'],
+            'airTemp': celsius_to_fahrenheit_or_null(entry['airTemp']),
+            'waterTemp': celsius_to_fahrenheit_or_null(entry['waterTemp'])
+        }
+        
+        chart_data.append(chart_entry)
+    
+    return chart_data
+
+
+def celsius_to_fahrenheit_or_null(celsius):
+    """
+    Convert Celsius to Fahrenheit for historical data.
+    Returns None if input is None (for Recharts compatibility).
+    """
+    if celsius is None:
+        return None
+    try:
+        return round((celsius * 9/5 + 32) * 10) / 10
+    except (ValueError, TypeError):
+        return None
+
+
+# ==================== Unit Conversions (Real-Time) ====================
+
 def celsius_to_fahrenheit(celsius):
     """Convert Celsius to Fahrenheit"""
     try:
@@ -96,10 +251,8 @@ def map_degrees_to_direction(degrees):
     """Map degrees to compass direction"""
     try:
         degrees = float(degrees)
-        # Normalize degrees to 0-360 range
         degrees = degrees % 360
         
-        # Map degrees to compass directions
         if degrees < 22.5 or degrees >= 337.5:
             return 'North'
         elif degrees < 67.5:
@@ -118,4 +271,3 @@ def map_degrees_to_direction(degrees):
             return 'Northwest'
     except (ValueError, TypeError):
         return 'Not Reported'
-    

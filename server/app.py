@@ -2,11 +2,11 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
 
-from utils.data_formatting import parse_text_data
+from utils.data_formatting import parse_real_time_data, parse_historical_data
 
 
 app = Flask(__name__)
-CORS(app)  # Configure this with your specific origins in production i.e. neflify site URL
+CORS(app)  # Configure this with neflify site URL
 
 @app.route('/api/health', methods=['GET'])
 def test():
@@ -27,8 +27,7 @@ def fetch_realtime_noaa_data():
         response = requests.get(url, timeout=5)
         response.raise_for_status()
         
-        # Parse the data
-        parsed_data = parse_text_data(response.text)
+        parsed_data = parse_real_time_data(response.text)
         
         return jsonify(parsed_data), 200, {
             'Content-Type': 'application/json',
@@ -40,6 +39,32 @@ def fetch_realtime_noaa_data():
         print(f'NOAA fetch error: {str(e)}')
         return jsonify({'error': 'Failed to fetch NOAA data'}), 500
 
+
+@app.route('/api/historical-noaa-data', methods=['GET'])
+def fetch_historical_noaa_data():
+    """Fetch and process historical NOAA buoy data for a specific station"""
+    station_id = request.args.get('stationId')
+    
+    if not station_id:
+        return jsonify({'error': 'Missing stationId parameter'}), 400
+    
+    url = f'https://www.ndbc.noaa.gov/data/realtime2/{station_id}.txt'
+    
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        
+        chart_data = parse_historical_data(response.text)
+        
+        return jsonify(chart_data), 200, {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-store'
+        }
+    except requests.exceptions.Timeout:
+        return jsonify({'error': 'Request timed out'}), 504
+    except requests.exceptions.RequestException as e:
+        print(f'NOAA historical fetch error: {str(e)}')
+        return jsonify({'error': f'Failed to fetch historical data for station {station_id}'}), 500
 
 
 if __name__ == '__main__':

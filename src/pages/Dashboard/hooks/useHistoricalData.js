@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getHistoricalData } from '../utils/GetHistoricalBuoyData';
+import { getHistoricalData } from '../utils/getHistoricalBuoyData';
 
 /**
  * Custom hook for managing historical buoy data

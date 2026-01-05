@@ -5,8 +5,8 @@ import { fetchCurrentBuoyData } from './api.js';
 // Cache duration in milliseconds (30 minutes)
 const CACHE_DURATION = 30 * 60 * 1000;  
 const CACHE_KEY = 'noaa_buoy_data_cache';
-// Maximum age for cached data in milliseconds (12 hours)
-const MAX_DATA_AGE = 12 * 60 * 60 * 1000;
+// Maximum age for cached data in milliseconds (8 hours)
+const MAX_DATA_AGE = 8 * 60 * 60 * 1000;
 
 const getStationId = entry => entry["#STN"];
 
@@ -77,7 +77,7 @@ const getMergedBuoyData = async () => {
   return mergedData;
 };
 
-// Combines fresh buoy data with recent cached data, excluding cached readings older than 12 hours.
+// Combines fresh buoy data with recent cached data, excluding cached readings older than 8 hours.
 const mergeFreshAndCached = (freshData, cachedData = []) => {
   const freshByStation = groupByStation(freshData);
   const cachedByStation = groupByStation(cachedData);
@@ -86,7 +86,7 @@ const mergeFreshAndCached = (freshData, cachedData = []) => {
 
   for (const [stationId, cachedEntries] of cachedByStation.entries()) {
     // Check if cached station ID is present in the fresh readings
-    // If the ID is missing, use its cached readings if they are less than 12 hours old
+    // If the ID is missing, use its cached readings if they are less than 8 hours old
     if (!freshByStation.has(stationId)) {
       const recentEntries = cachedEntries.filter(
         entry => !isDataTooOld(entry)
