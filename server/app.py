@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
 
-from utils.data_formatting import parse_real_time_data, parse_historical_data
+from utils.process_realtime_data import parse_real_time_data
+from utils.process_historical_data import parse_historical_data
 
 
 app = Flask(__name__)

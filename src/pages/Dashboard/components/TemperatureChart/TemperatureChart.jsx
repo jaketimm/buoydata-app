@@ -4,13 +4,13 @@ import { useTheme } from '../../utils/chartThemeColors';
 import './TemperatureChart.css';
 
 // Chart component displaying 45-day historical temperature data for air and water temps
-const TemperatureChart = ({ 
-  stationId, 
-  stationInfo, 
-  historicalData, 
-  historicalLoading, 
-  historicalError, 
-  fetchHistoricalDataForStation 
+const TemperatureChart = ({
+  stationId,
+  stationInfo,
+  historicalData,
+  historicalLoading,
+  historicalError,
+  fetchHistoricalDataForStation
 }) => {
   const theme = useTheme();
 
@@ -41,7 +41,7 @@ const TemperatureChart = ({
 
   // Get data for this specific station
   const data = historicalData[stationId];
-  
+
   // Handle case where no data exists for this station
   if (!data || data.length === 0) {
     return (
@@ -56,14 +56,10 @@ const TemperatureChart = ({
   const chartData = data.map(entry => ({
     ...entry,
     // Format date for readable x-axis labels
-    displayDate: entry.date ? new Date(entry.date).toLocaleDateString() : entry.dayKey,
-    // Ensure temperature values are numbers or null for proper chart rendering
-    airTemp: entry.airTemp !== null ? (typeof entry.airTemp === 'number' ? entry.airTemp : parseFloat(entry.airTemp)) : null,
-    waterTemp: entry.waterTemp !== null ? (typeof entry.waterTemp === 'number' ? entry.waterTemp : parseFloat(entry.waterTemp)) : null
-  })).filter(entry => 
-    // Only include entries that have at least one valid temperature reading
-    entry.airTemp !== null || entry.waterTemp !== null
-  );
+    displayDate: entry.timestamp
+      ? new Date(entry.timestamp).toLocaleDateString()
+      : entry.dayKey
+  }));
 
   // Handle case where data exists but no valid temperature readings
   if (chartData.length === 0) {
@@ -77,7 +73,7 @@ const TemperatureChart = ({
 
   // Calculate optimal Y-axis range based on temperature data
   const allTemps = chartData.flatMap(entry => [entry.airTemp, entry.waterTemp]).filter(temp => temp != null && !isNaN(temp));
-  
+
   if (allTemps.length === 0) {
     return (
       <div className="no-chart-data">
@@ -100,10 +96,10 @@ const TemperatureChart = ({
             <LineChart data={chartData}>
               {/* Chart grid lines */}
               <CartesianGrid strokeDasharray="3 3" stroke={theme.grid} />
-              
+
               {/* X-axis for dates */}
-              <XAxis 
-                dataKey="displayDate" 
+              <XAxis
+                dataKey="displayDate"
                 angle={-45}                    // Rotate labels to prevent overlap
                 textAnchor="end"
                 height={80}                    // Extra space for rotated labels
@@ -111,15 +107,15 @@ const TemperatureChart = ({
                 tick={{ fill: theme.text }}
                 stroke={theme.axis}
               />
-              
+
               {/* Y-axis for temperature values */}
-              <YAxis 
+              <YAxis
                 label={{ value: 'Temperature (°F)', angle: -90, position: 'insideLeft', fill: theme.textSecondary }}
                 tick={{ fill: theme.text }}
                 domain={yAxisDomain}           // Use calculated range
                 stroke={theme.axis}
               />
-              
+
               {/* Hover tooltip with formatted temperature display */}
               <Tooltip
                 formatter={(value, name) => {
@@ -141,24 +137,24 @@ const TemperatureChart = ({
               />
 
               {/* Chart legend */}
-              <Legend 
+              <Legend
                 wrapperStyle={{ color: theme.text }}
               />
-              
+
               {/* Air temperature line */}
-              <Line 
-                type="monotone" 
-                dataKey="airTemp" 
+              <Line
+                type="monotone"
+                dataKey="airTemp"
                 stroke={theme.lineAir}
                 strokeWidth={2}
                 dot={{ r: 4 }}
                 name="Daily High Air Temperature"
               />
-              
+
               {/* Water temperature line */}
-              <Line 
-                type="monotone" 
-                dataKey="waterTemp" 
+              <Line
+                type="monotone"
+                dataKey="waterTemp"
                 stroke={theme.lineWater}
                 strokeWidth={2}
                 dot={{ r: 4 }}
