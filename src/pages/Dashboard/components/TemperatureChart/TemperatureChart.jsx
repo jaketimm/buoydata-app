@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { useTheme } from '../../utils/chartThemeColors';
+import { useTheme } from './chartThemeColors';
 import './TemperatureChart.css';
 
 // Chart component displaying 45-day historical temperature data for air and water temps
@@ -34,7 +34,7 @@ const TemperatureChart = ({
   if (historicalError[stationId]) {
     return (
       <div className="chart-error">
-        <p>Error loading temperature data: {historicalError[stationId]}</p>
+        <p>Error loading temperature data</p>
       </div>
     );
   }
@@ -47,7 +47,6 @@ const TemperatureChart = ({
     return (
       <div className="no-chart-data">
         <p>No temperature data available for this station.</p>
-        <p>Debug: historicalData keys: {Object.keys(historicalData).join(', ')}</p>
       </div>
     );
   }
@@ -66,7 +65,6 @@ const TemperatureChart = ({
     return (
       <div className="no-chart-data">
         <p>No valid temperature data available for this station.</p>
-        <p>Data format: {data.length > 0 ? `Found ${data.length} entries, but no valid temperature readings` : 'No data found'}</p>
       </div>
     );
   }

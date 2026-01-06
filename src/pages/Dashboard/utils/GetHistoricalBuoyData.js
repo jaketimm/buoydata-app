@@ -12,7 +12,7 @@ const HISTORICAL_CACHE_DURATION = 12 * 60 * 60 * 1000; // 12 hours
 export const getHistoricalData = async (stationId) => {
   try {
     // Check cache first
-    const cachedData = getCachedHistoricalData(stationId);
+    const cachedData = getCachedHistoricalData(stationId); 
     if (cachedData) {
       return cachedData;
     }
