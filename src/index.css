@@ -1,0 +1,136 @@
+:root {
+  /* Background Colors */
+  --bg-primary: #f5f6fa;
+  --bg-secondary: #ffffff;
+  --bg-error: #f8e6e6;
+  --bg-header-footer: #1a293d;
+  --modal-bg: #f5f6fa;
+
+  /* Text Colors */
+  --text-primary: #1a293d;
+  --text-accent: #4a5a6a;
+  --text-secondary: #6c757d;
+  --text-error: #c85450;
+
+  /* Border Colors */
+  --border-primary: #294b5e;
+  --border-light: #e0e0e0;
+  --border-error: #e6b3b3;
+
+  /* Button Colors */
+  --button-primary: #4a5a6a;
+  --button-hover: #70879e;
+  --button-favorite: #1a293d;
+
+  /* Shadow Colors */
+  --shadow-light: rgba(0, 0, 0, 0.07);
+  --shadow-medium: rgba(46, 134, 171, 0.10);
+
+  /* Spinner */
+  --spinner-color: #607a94;
+
+  /* Chart Colors */
+  --chart-line-air: #414656;
+  --chart-line-water: #4590f9;
+
+  /* Utility */
+  --transparent: transparent;
+
+  /* Map Colors */
+  --map-bg-primary: #f5f6fa;
+  --map-bg-secondary: #ffffff;
+  --map-bg-error: #f8e6e6;
+  --map-text-primary: #1a293d;
+  --map-text-secondary: #6c757d;
+  --map-text-error: #c85450;
+  --map-legend-has-data: #4a5a6a;
+  --map-border-primary: #294b5e;
+  --map-border-light: #e0e0e0;
+  --map-button-primary: #4a5a6a;
+  --map-button-hover: #70879e;
+  --map-button-favorite: #1a293d;
+  --map-selector-legend-background: #ffffff;
+  --map-shadow-medium: rgba(46, 134, 171, 0.10);
+}
+
+.dark-mode {
+  /* Background Colors */
+  --bg-primary: #10151c;
+  --bg-secondary: #1a293d;
+  --bg-error: #3a2323;
+  --bg-header-footer: #1a293d;
+  --modal-bg: #19212c;
+
+  /* Text Colors */
+  --text-primary: #e6e6e6;
+  --text-accent: #e6e6e6;
+  --text-secondary: #b0b8c1;
+  --text-error: #ffb3b3;
+
+  /* Border Colors */
+  --border-primary: #36658b;
+  --border-light: #3a4756;
+  --border-error: #ffb3b3;
+
+  /* Button Colors */
+  --button-primary: #36658b;
+  --button-hover: #4a7db0;
+  --button-favorite: #36658b;
+
+  /* Shadow Colors */
+  --shadow-light: rgba(0, 0, 0, 0.3);
+  --shadow-medium: rgba(58, 109, 151, 0.15);
+
+  /* Chart Colors */
+  --chart-line-air: #414656;
+  --chart-line-water: #4590f9;
+
+  /* Utility */
+  --transparent: transparent;
+
+  /* Spinner */
+  --spinner-color: #36658b;
+
+  /* Map Colors */
+  --map-bg-primary: #f5f6fa;
+  --map-bg-secondary: #e7eaec;
+  --map-bg-error: #e7eaec;
+  --map-text-primary: #10151c;
+  --map-text-secondary: #10151c;
+  --map-text-error: #ca5b5b;
+  --map-legend-has-data: #36658b;
+  --map-border-primary: #1a293d;
+  --map-border-light: #325b74;
+  --map-button-primary: #0d141d;
+  --map-button-hover: #2c4668;
+  --map-button-favorite: #0d141d;
+  --map-selector-legend-background: #e7eaec;
+  --map-shadow-medium: rgba(46, 134, 171, 0.10);
+}
+
+/* Universal transition delays for theme changes */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+

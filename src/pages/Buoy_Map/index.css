@@ -1,0 +1,64 @@
+.maps-buoy-map-container {
+  height: 92vh;
+  max-width: 100vw;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+}
+
+.maps-map-container {
+  flex: 1 1 auto;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  min-height: 0;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.maps-error-message {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--map-bg-error);
+  color: var(--map-text-error);
+  padding: 10px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  font-weight: 500;
+}
+
+/* Debug panel styling (if needed) */
+.maps-debug-panel {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  max-width: 400px;
+  max-height: 300px;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--map-border-light);
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 1000;
+  font-size: 12px;
+}
+
+.maps-debug-panel details summary {
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.maps-debug-panel pre {
+  white-space: pre-wrap;
+}

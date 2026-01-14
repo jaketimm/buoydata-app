@@ -1,0 +1,136 @@
+body {
+  background-color: var(--bg-primary);
+  margin: 0;
+  padding: 0;
+}
+
+/* Disable tap highlight color (iOS Safari, some Android) */
+* {
+  -webkit-tap-highlight-color: var(--transparent);
+}
+
+/* Prevent gray flash on tap in Safari */
+body {
+  -webkit-touch-callout: none;
+}
+
+.buoy-dashboard {
+  padding: 20px;
+  padding-top: 40px;
+  padding-bottom: 75px;
+  max-width: 1200px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.buoy-dashboard h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+  font-size: 2em;
+}
+
+.buoy-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+
+/* Tablet and up - 2 columns */
+@media (min-width: 768px) {
+  .buoy-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop and up - 3 columns */
+@media (min-width: 1024px) {
+  .buoy-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.error {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-error);
+  background-color: var(--bg-error);
+  border: 1px solid var(--border-error);
+  border-radius: 5px;
+  margin: 20px;
+}
+
+.temperature-chart-button {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: var(--button-hover);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.temperature-chart-button:hover {
+  background-color: var(--button-hover);
+}
+
+.historical-error {
+  color: var(--text-error);
+  font-size: 0.85em;
+  text-align: center;
+  padding: 8px;
+  background-color: var(--bg-error);
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.historical-data-display {
+  margin-top: 10px;
+}
+
+.historical-data-display h4 {
+  margin: 0 0 10px 0;
+  color: var(--text-primary);
+  font-size: 1em;
+  text-align: center;
+}
+
+.historical-entries {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  background-color: var(--bg-primary);
+}
+
+.historical-entry {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.85em;
+}
+
+.historical-entry:last-child {
+  border-bottom: none;
+}
+
+.historical-timestamp {
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.historical-readings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--text-accent);
+}
+
+.historical-readings span {
+  background-color: var(--bg-secondary);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.8em;
+}
