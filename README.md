@@ -15,7 +15,6 @@ A web application built with React and Flask that displays real-time buoy condit
 
 **Frontend:** React, React Router, MapLibre GL, Recharts  
 **Backend:** Python, Flask
-**Deployment:** DigitalOcean App Platform  
 
 ## Project Structure
 
