@@ -1,60 +1,71 @@
 # Buoy Conditions Website
 
-A React application with a Python/Flask backend that displays North American buoy data provided by NDBC/NOAA.
+A web application built with React and Flask that displays real-time buoy conditions from NOAA stations across North America.
+
+🌊 **[Live Demo](https://buoy-data-site-85kks.ondigitalocean.app)**
+
+## Features
+
+- Real-time buoy data from NOAA's National Data Buoy Center
+- Interactive map view of buoy locations
+- 45-day historical charts for average wave height, maximum air and water temperatures
+- Client-side caching with smart data merging
+
+## Tech Stack
+
+**Frontend:** React, React Router, MapLibre GL, Recharts  
+**Backend:** Python, Flask
+**Deployment:** DigitalOcean App Platform  
 
 ## Project Structure
 
 ```
-Project
 ├── public/                 # Static assets
 ├── server/                 
 │   ├── utils/              # NOAA data processing utilities
-│   └── app.py              # Flask Routes
+│   └── app.py              # Flask API routes
 ├── src/
-│   ├── constants/          # Station List
+│   ├── constants/          # Station list 
 │   ├── pages/              # Page components
-│   │   ├── Dashboard/      # Dashboard page and assets
-│   │   └── Buoy_Map/       # Map page and assets
-│   ├── shared/             # Shared components, hooks, utility functions
+│   │   ├── Dashboard/      # Main dashboard with buoy cards
+│   │   └── Buoy_Map/       # Interactive map view
+│   ├── shared/             # Shared components, hooks, utilities
 │   └── App.js              # Main app component
-├── package.json            # Dependencies and scripts
-└── README.md               # Project documentation
 ```
 
-## Installation
+## Local Development
 
-1. Clone the repository
+### Installation
 
-2. Install main dependencies:
-
+1. Install frontend dependencies:
 ```bash
 npm install
 ```
 
-3. Set up Python backend:
-
+2. Set up Python backend:
 ```bash
 cd server
 python -m venv venv
-# Windows:
-venv\Scripts\activate
-# Mac/Linux:
-source venv/bin/activate
-
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Run Application
+### Running the Application
 
-1. Start the Flask server
-
+1. Start the Flask backend:
 ```bash
 cd server
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 python app.py
 ```
 
-2. Open a new terminal
-
+2. In a new terminal, start the React frontend:
 ```bash
 npm start
 ```
+
+The application will open at `http://localhost:3000`
+
+## Deployment
+
+Deployed on DigitalOcean App Platform with separate services for frontend (static site) and backend (web service).
