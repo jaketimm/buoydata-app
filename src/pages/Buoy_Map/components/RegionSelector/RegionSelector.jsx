@@ -1,6 +1,7 @@
 import React from 'react';
 import './RegionSelector.css';
 
+// Select component for body of water to snap to on map
 const RegionSelector = ({ selectedRegion, onRegionChange, regions }) => {
   return (
     <div className="maps-region-selector-container">

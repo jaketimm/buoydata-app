@@ -16,12 +16,12 @@ import StationPopup from './components/StationPopup/StationPopup';
 
 // BuoyMap Component - Displays an interactive map with marine buoy stations
 const BuoyMap = ({ darkMode = false }) => {
-  // Custom hooks for managing application state
+
   const { toggleFavorite, isFavorite } = useFavorites();
   const { selectedRegion, setSelectedRegion, REGIONS, viewState: regionViewState } = useRegion();
   const { buoyData, loading, error } = useBuoyData();
   
-  // Map view state - controls camera position and zoom level
+  // Map view state - controls map position and zoom level
   const [viewState, setViewState] = useState(regionViewState || {
     longitude: -75,  // Default to East Coast US
     latitude: 36,

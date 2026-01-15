@@ -3,7 +3,7 @@ import { Popup } from 'react-map-gl/maplibre';
 import './StationPopup.css';
 import displayHelpers from '../../../../shared/utils/displayHelpers.js';
 
-// Popup component that displays detailed station information when a buoy marker is clicked
+// Popup component that displays station information and readings when a buoy marker is clicked
 const StationPopup = ({ 
   popupInfo, 
   currentZoom, 

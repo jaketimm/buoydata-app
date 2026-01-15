@@ -12,7 +12,7 @@ import useDashboardFilters from './hooks/useDashboardFilters.js';
 
 // Main dashboard component - displays grid of buoy stations with real-time data
 const BuoyDashboard = () => {
-  // Custom hooks for managing application state
+
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const { buoyData, loading, error } = useBuoyData();
   const {
@@ -32,12 +32,12 @@ const BuoyDashboard = () => {
   // Filter state - filter stations by body of water
   const [selectedBodyOfWater, setSelectedBodyOfWater] = useState('all');
 
-  // Open temperature chart modal and fetch historical data if needed
+  // Open temperature chart modal and fetch historical data 
   const openTemperatureModal = async (stationId, stationInfo) => {
     setSelectedStation({ id: stationId, info: stationInfo });
     setIsModalOpen(true);
 
-    // Fetch historical data if not already loaded for this station
+    // Fetch historical data if not already retrieved for this station
     if (!historicalData[stationId] && !historicalLoading[stationId]) {
       await fetchHistoricalDataForStation(stationId);
     }

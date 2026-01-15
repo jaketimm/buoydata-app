@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Full screen overlay with a loading spinner
 const FullScreenLoading = () => {
   return (
     <>

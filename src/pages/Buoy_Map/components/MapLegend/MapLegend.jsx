@@ -1,6 +1,7 @@
 import React from 'react';
 import './MapLegend.css';
 
+// Legend w/ markers in upper right of map
 const MapLegend = () => {
   return (
     <div className="maps-map-legend">

@@ -3,8 +3,7 @@ import numpy as np
 
 def parse_historical_data(text):
     """
-    Orchestrator function for historical data processing.
-    Parses raw NOAA data and returns daily highs for charting.
+    Orchestrator function, parses raw NOAA data and returns daily readings for charting.
     """
     entries = parse_raw_entries(text)
     valid_entries = filter_valid_entries(entries)
@@ -16,7 +15,6 @@ def parse_historical_data(text):
 def parse_raw_entries(text):
     """
     Parse raw NOAA text data into structured entries.
-    No unit conversions - just structure parsing with timestamps.
     """
     lines = text.strip().split('\n')
     
@@ -56,9 +54,7 @@ def parse_raw_entries(text):
 
 def filter_valid_entries(entries):
     """
-    Filter entries to only include those with at least one valid reading.
-    Valid means: exists, not 'MM', and is a valid number.
-    Checks ATMP, WTMP, and WVHT.
+    Filter entries to only include those with at least one valid reading (exists, not 'MM')
     """
     def is_valid_value(value):
         if value is None or value == 'MM':
@@ -81,7 +77,6 @@ def calculate_daily_readings(entries):
     """
     Group entries by day and find the highest values for each day.
     Temperatures use max values, wave height uses average.
-    Returns a dict keyed by dayKey.
     """
 
     def to_float(value):
@@ -145,8 +140,6 @@ def calculate_daily_readings(entries):
 def format_chart_data(daily_readings):
     """
     Convert daily highs dict to sorted list for charting.
-    Converts temperatures from Celsius to Fahrenheit.
-    Converts wave height from meters to feet.
     """
     chart_data = []
     
@@ -169,7 +162,7 @@ def format_chart_data(daily_readings):
 def celsius_to_fahrenheit(celsius):
     """
     Convert Celsius to Fahrenheit for historical data.
-    Returns None if input is None (for Recharts compatibility).
+    Returns None for missing values (for Recharts compatibility).
     """
     if celsius is None:
         return None
@@ -182,7 +175,7 @@ def celsius_to_fahrenheit(celsius):
 def meters_to_feet(meters):
     """
     Convert meters to feet for historical data.
-    Returns None if input is None (for Recharts compatibility).
+    Returns None for missing values (for Recharts compatibility).
     """
     if meters is None:
         return None

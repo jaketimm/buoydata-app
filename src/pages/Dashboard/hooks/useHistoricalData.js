@@ -1,24 +1,19 @@
 import { useState } from 'react';
 import { getHistoricalData } from '../utils/GetHistoricalBuoyData';
 
-/**
- * Custom hook for managing historical buoy data
- * @returns {Object} Object containing historical data, loading states, errors, and fetch function
- */
+// Custom hook for managing historical buoy data
 const useHistoricalData = () => {
   // State for historical data
   const [historicalData, setHistoricalData] = useState({});
   const [historicalLoading, setHistoricalLoading] = useState({});
   const [historicalError, setHistoricalError] = useState({});
 
-  /**
-   * Fetches historical data for a specific station
-   * @param {string} stationId - The station ID to fetch data for
-   */
+  // Fetches historical data for a specific station
   const fetchHistoricalDataForStation = async (stationId) => {
+    
     // Check if we already have data for this station
     if (historicalData[stationId]) {
-      return; // Data already loaded
+      return;
     }
     
     setHistoricalLoading(prev => ({ ...prev, [stationId]: true }));

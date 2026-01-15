@@ -4,11 +4,7 @@ import { fetchHistoricalBuoyData } from './api';
 const HISTORICAL_CACHE_KEY = 'historical_data_cache';
 const HISTORICAL_CACHE_DURATION = 12 * 60 * 60 * 1000; // 12 hours
 
-/**
- * Fetches historical data for a specific station and returns daily highs
- * @param {string} stationId - The station ID to fetch historical data for
- * @returns {Promise<Array>} Array of daily high temperature entries for the station
- */
+// Fetches historical data for a specific station and returns daily high temps, average wave heights.
 export const getHistoricalData = async (stationId) => {
   try {
     // Check cache first
@@ -30,11 +26,7 @@ export const getHistoricalData = async (stationId) => {
   }
 };
 
-/**
- * Gets cached historical data for a specific station
- * @param {string} stationId - The station ID
- * @returns {Array|null} Cached data if valid, null otherwise
- */
+// Gets cached historical data for a specific station
 const getCachedHistoricalData = (stationId) => {
   try {
     const cachedString = localStorage.getItem(HISTORICAL_CACHE_KEY);
@@ -57,11 +49,7 @@ const getCachedHistoricalData = (stationId) => {
   }
 };
 
-/**
- * Sets cached historical data for a specific station
- * @param {string} stationId - The station ID
- * @param {Array} data - The historical data to cache
- */
+// Sets cached historical data for a specific station
 const setCachedHistoricalData = (stationId, data) => {
   try {
     const cachedString = localStorage.getItem(HISTORICAL_CACHE_KEY);

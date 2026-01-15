@@ -3,8 +3,7 @@ import { ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 import { useTheme } from './chartThemeColors';
 import './TemperatureChart.css';
 
-// Chart component displaying 45-day historical temperature data for air and water temps
-// plus average wave height as bars
+// Chart component displaying 45-day historical temperature data for air, water temps, and wave heights
 const TemperatureChart = ({
   stationId,
   stationInfo,
@@ -70,7 +69,7 @@ const TemperatureChart = ({
     );
   }
 
-  // Calculate optimal Y-axis range based on temperature data
+  // Calculate left y-axis range based on temperature data
   const allTemps = chartData.flatMap(entry => [entry.airTemp, entry.waterTemp]).filter(temp => temp != null && !isNaN(temp));
 
   if (allTemps.length === 0) {
@@ -87,11 +86,11 @@ const TemperatureChart = ({
   const yAxisPadding = 10;
   const yAxisDomain = [Math.floor(minTemp - yAxisPadding), Math.ceil(maxTemp + yAxisPadding)];
 
-  // Calculate optimal Y-axis range for wave height
+  // True/False flag for if wave data is available. Hides second Y-axis if no wave data
   const allWaveHeights = chartData.map(entry => entry.waveHeight).filter(height => height != null && !isNaN(height));
-
   const hasWaveData = allWaveHeights.length > 0;
-  let waveHeightDomain = [0, 15]; // Default domain
+
+  let waveHeightDomain = [0, 15]; // Default right y-axis domain
 
   return (
     <div className="temperature-chart">

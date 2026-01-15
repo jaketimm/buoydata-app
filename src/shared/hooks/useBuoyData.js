@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getProcessedStationData } from '../utils/GetCurrentBuoyData';
 
-// Hook to fetch buoy data from the API and store it in the state
+// Hook to fetch buoy data from the API and store it
 export default function useBuoyData() {
   const [buoyData, setBuoyData] = useState([]);
   const [loading, setLoading] = useState(false);

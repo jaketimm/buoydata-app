@@ -1,3 +1,4 @@
+// Fetch 45 day historical buoy readings from the Flask App
 export const fetchHistoricalBuoyData = async (stationId) => {
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
