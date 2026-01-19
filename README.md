@@ -2,7 +2,7 @@
 
 A web application built with React and Flask that displays real-time buoy conditions from NOAA stations across North America.
 
-🌊 **[Live Demo](https://buoy-data-site-85kks.ondigitalocean.app)**
+🌊 **[Live Demo](https://buoydata.net)**
 
 ## Features
 

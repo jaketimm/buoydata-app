@@ -86,9 +86,10 @@ const TemperatureChart = ({
   const yAxisPadding = 10;
   const yAxisDomain = [Math.floor(minTemp - yAxisPadding), Math.ceil(maxTemp + yAxisPadding)];
 
-  // True/False flag for if wave data is available. Hides second Y-axis if no wave data
-  const allWaveHeights = chartData.map(entry => entry.waveHeight).filter(height => height != null && !isNaN(height));
-  const hasWaveData = allWaveHeights.length > 0;
+  // True/False flag for if wave and temp data are available (count how many valid values are avialable). Hides Y-axis and legends for missing data
+  const hasWaveData = (chartData.map(entry => entry.waveHeight).filter(height => height != null && !isNaN(height))).length > 0;
+  const hasAirTemps = (chartData.map(entry => entry.airTemp).filter(airTemp => airTemp != null && !isNaN(airTemp))).length > 0;
+  const hasWaterTemps = (chartData.map(entry => entry.waterTemp).filter(waterTemp => waterTemp != null && !isNaN(waterTemp))).length > 0;
 
   let waveHeightDomain = [0, 15]; // Default right y-axis domain
 
@@ -169,7 +170,7 @@ const TemperatureChart = ({
               />}
 
               {/* Air temperature line */}
-              <Line
+              {hasAirTemps && <Line
                 yAxisId="left"
                 type="monotone"
                 dataKey="airTemp"
@@ -177,10 +178,10 @@ const TemperatureChart = ({
                 strokeWidth={2}
                 dot={{ r: 4 }}
                 name="Daily High Air Temperature"
-              />
+              />}
 
               {/* Water temperature line */}
-              <Line
+              {hasWaterTemps && <Line
                 yAxisId="left"
                 type="monotone"
                 dataKey="waterTemp"
@@ -188,7 +189,7 @@ const TemperatureChart = ({
                 strokeWidth={2}
                 dot={{ r: 4 }}
                 name="Daily High Water Temperature"
-              />
+              />}
 
 
             </ComposedChart>
