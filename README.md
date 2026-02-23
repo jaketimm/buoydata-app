@@ -1,6 +1,6 @@
 # Buoy Conditions Website
 
-A web application built with React and Flask that displays real-time buoy conditions from NOAA stations across North America.
+A web application built with React and Flask that displays real-time buoy conditions from NOAA stations across North America, Hawaii, and the Caribbean.
 
 🌊 **[Live Demo](https://buoydata.net)**
 
