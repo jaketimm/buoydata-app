@@ -5,8 +5,8 @@ import { fetchCurrentBuoyData } from './api.js';
 // Cache duration in milliseconds (30 minutes)
 const CACHE_DURATION = 30 * 60 * 1000;  
 const CACHE_KEY = 'noaa_buoy_data_cache';
-// Maximum age for cached data in milliseconds (8 hours)
-const MAX_DATA_AGE = 8 * 60 * 60 * 1000;
+// Maximum age for cached data in milliseconds (4 hours)
+const MAX_DATA_AGE = 4 * 60 * 60 * 1000;
 
 const getStationId = entry => entry["#STN"];
 
@@ -77,7 +77,7 @@ const getMergedBuoyData = async () => {
   return mergedData;
 };
 
-// Combines fresh buoy data with recent cached data, excluding cached readings older than 8 hours.
+// Combines fresh buoy data with recent cached data, excluding cached readings older than 4 hours.
 const mergeFreshAndCached = (freshData, cachedData = []) => {
   const freshByStation = groupByStation(freshData);
   const cachedByStation = groupByStation(cachedData);
@@ -85,13 +85,14 @@ const mergeFreshAndCached = (freshData, cachedData = []) => {
   const staleStations = [];
 
   for (const [stationId, cachedEntries] of cachedByStation.entries()) {
-    // Check if cached station ID is present in the fresh readings
-    // If the ID is missing, use its cached readings if they are less than 8 hours old
+    // Check if station ID (from the constants file) is present in the fresh readings (freshByStation)
+    // If there are no fresh readings, use its cached readings if they are less than 4 hours old
     if (!freshByStation.has(stationId)) {
       const recentEntries = cachedEntries.filter(
         entry => !isDataTooOld(entry)
       );
 
+      // Station has cached readings that are less than 4 hours old, merge them into freshByStation
       if (recentEntries.length > 0) {
         freshByStation.set(stationId, recentEntries);
       } else {
@@ -128,6 +129,7 @@ const groupByStation = (entries = []) => {
 };
 
 // Selects the most recent reading for each station based on timestamp
+// Some stations report every 10 minutes
 const getNewestReadingPerStation = (entries) => {
   const newestByStation = {};
 
@@ -146,7 +148,7 @@ const getNewestReadingPerStation = (entries) => {
   return Object.values(newestByStation);
 };
 
-// Checks if a data entry is too old based on its ISO timestamp
+// Checks if a data entry is > 4 hrs old based on its ISO timestamp
 const isDataTooOld = (entry) => {
   if (!entry.isoTimestamp) {
     return true; // Consider entries without timestamps as too old

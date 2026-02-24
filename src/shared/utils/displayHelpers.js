@@ -7,8 +7,8 @@ const isDataTooOld = (stationData) => {
   const dataDate = new Date(stationData.timestamp);
   const now = new Date();
   const ageInMs = now - dataDate;
-  const fourHrsInMs = 4 * 60 * 60 * 1000;
-  return ageInMs > fourHrsInMs;
+  const twoHrsInMs = 2 * 60 * 60 * 1000;
+  return ageInMs > twoHrsInMs;
 }
 
 // Treat each data field as a function that returns an object with label, value, and unit.
