@@ -1,6 +1,5 @@
 // StationCoordinates.js
 export const StationList = {
-// North America Stations
 '41008': { name: 'Grays Reef - SE of Savannah, GA', latitude: 31.400, longitude: -80.866, bodyOfWater: 'Atlantic Ocean' },
 'MROS1': { name: 'Springmaid Pier, SC', latitude: 33.656, longitude: -78.916, bodyOfWater: 'Atlantic Ocean' },
 'CHTS1': { name: 'Charleston, SC', latitude: 32.781, longitude: -79.924, bodyOfWater: 'Atlantic Ocean' },

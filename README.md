@@ -27,7 +27,7 @@ A web application built with React and Flask that displays real-time buoy condit
 │   ├── constants/          # Station list 
 │   ├── pages/              # Page components
 │   │   ├── Dashboard/      # Main dashboard with buoy cards
-│   │   └── Buoy_Map/       # Interactive map view
+│   │   └── Buoy_Map/       # Interactive map with buoy markers
 │   ├── shared/             # Shared components, hooks, utilities
 │   └── App.js              # Main app component
 ```
